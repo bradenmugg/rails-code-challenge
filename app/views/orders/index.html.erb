@@ -3,10 +3,15 @@
     <title>Orders</title>
   </head>
   <body>
-    <h1>Orders</h1>
-
+    <h1>Shipped Orders</h1>
     <ul>
-    <% @orders.each do |order| %>
+    <% @shipped_orders.each do |order| %>
+      <li><%= link_to order.id, order_path(order) %></li>
+    <% end %>
+    </ul>
+    <h1>Unshipped Orders</h1>
+    <ul>
+    <% @unshipped_orders.each do |order| %>
       <li><%= link_to order.id, order_path(order) %></li>
     <% end %>
     </ul>

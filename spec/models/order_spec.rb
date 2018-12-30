@@ -32,4 +32,26 @@ RSpec.describe Order, type: :model do
       it { is_expected.to be_warehoused }
     end
   end
+
+  describe '.shipped and .unshipped' do
+    let!(:shipped) { Order.create(shipped_at: Time.now) }
+    let!(:unshipped) { Order.create() }
+
+    describe '.shipped' do
+      subject { Order.shipped }
+      it { is_expected.to include(shipped) }
+      it { is_expected.not_to include(unshipped) }
+
+      context 'when there is an newer shipped order' do
+        let!(:new_shipped) { Order.create(shipped_at: Time.now) }
+        it { is_expected.to end_with(new_shipped) }
+      end
+    end
+
+    describe '.unshipped' do
+      subject { Order.unshipped }
+      it { is_expected.to include(unshipped) }
+      it { is_expected.not_to include(shipped) }
+    end
+  end
 end
