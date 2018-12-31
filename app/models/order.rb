@@ -1,6 +1,9 @@
 class Order < ApplicationRecord
   scope :shipped, -> { where.not(shipped_at: nil).order(:shipped_at) }
   scope :unshipped, -> { where(shipped_at: nil) }
+  has_many :line_items
+  accepts_nested_attributes_for :line_items, reject_if: :all_blank?, allow_destroy: true
+  validates_associated :line_items
 
   def expedited?
     @expedite
@@ -23,4 +26,5 @@ class Order < ApplicationRecord
   def warehoused?
     @warehouse
   end
+
 end

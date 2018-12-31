@@ -1,0 +1,35 @@
+<h1>New order</h1>
+<%= form_for @order do |f| %>
+  <% if @order.errors %>
+    <% @order.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  <% end %>
+  <%= f.fields_for :line_items do |ff| %>
+    <div>
+      <h3>Line Item</h3>
+    <div>
+      <%= ff.label :quantity %>
+      <%= ff.text_field :quantity, place_holder: 'quantity' %>
+    </div>
+    <div>
+      <%= ff.label :unit_price %>
+      <%= ff.text_field :unit_price %>
+    </div>
+    <%= ff.fields_for :widget do |fff| %>
+      <div>
+        <h3>Widget</h3>
+        <div>
+          <%=fff.label :name %>
+          <%= fff.text_field :name %>
+        </div>
+        <div>
+          <%= fff.label :msrp %>
+          <%= fff.text_field :msrp %>
+        </div>
+      </div>
+    <% end %>
+    </div>
+  <% end %>
+  <%= f.submit "Create Order" %>
+<% end %>
