@@ -22,14 +22,32 @@ RSpec.describe Order, type: :model do
       it { is_expected.to be_expedited }
     end
 
+    context 'when expedite is turned on then off' do
+      before { subject.settings(expedite: true) }
+      before { subject.settings(expedite: false) }
+      it { is_expected.not_to be_expedited }
+    end
+
     context 'when returns is present' do
       before { subject.settings(returns: true) }
       it { is_expected.to be_returnable }
     end
 
+    context 'when returns is turned on then off' do
+      before { subject.settings(returns: true) }
+      before { subject.settings(returns: false) }
+      it { is_expected.not_to be_returnable }
+    end
+
     context 'when warehouse is present' do
       before { subject.settings(warehouse: true) }
       it { is_expected.to be_warehoused }
+    end
+
+    context 'when warehouse is turned on then off' do
+      before { subject.settings(warehouse: true) }
+      before { subject.settings(warehouse: false) }
+      it { is_expected.not_to be_warehoused }
     end
   end
 
